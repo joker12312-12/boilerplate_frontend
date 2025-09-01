@@ -1,25 +1,53 @@
-// next.config.ts
-import type { NextConfig } from 'next';
+/** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
-const protocol: 'http' | 'http' =
-  process.env.NODE_ENV === 'development' ? 'http' : 'http';
+const HOSTNAME = process.env.NEXT_PUBLIC_HOSTNAME || 'boiler.local';
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || 'boilerplate.local';
 
-// HERE: ensure hostname is a string
-const hostname: string = process.env.HOSTNAME ?? 'boiler.local';
-
-const nextConfig: NextConfig = {
+const nextConfig = {
   env: {
-    WP_GRAPHQL_URL:
-      process.env.WP_GRAPHQL_URL ?? 'http://localhost:8888/graphql',
+    WP_GRAPHQL_URL: process.env.WP_GRAPHQL_URL || 'http://localhost:3000/graphql',
   },
   images: {
     remotePatterns: [
+      // Ad images
       {
-        protocol,
-        hostname,
+        protocol: 'https',
+        hostname: 'track.adtraction.com',
+        pathname: '/t/**',
+      },
+      // Your site(s)
+      {
+        protocol: 'https',
+        hostname: 'newfinanstid.kinsta.cloud',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'staging6.finanstidning.se', // <- fixed (no scheme, no slash)
+        pathname: '/**',
+      },
+      // Local/dev hosts (note: these are http; update to https if applicable)
+      {
+        protocol: 'http',
+        hostname: HOSTNAME,
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: HOST_URL,
+        pathname: '/**',
+      },
+      // Gravatar
+      {
+        protocol: 'https',
+        hostname: 'secure.gravatar.com',
+        pathname: '/**',
       },
     ],
   },
 };
 
-export default nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

@@ -1,15 +1,14 @@
-
-export type PostItem = {
-  id: number;
-  title: string;
-  slug: string;
-  link: string;
-  src: string; 
-  featured_image: string;
-  publish_date: string;
-  author_name: string;
-  categories: string[];
-};
+export interface ISocial_Media_Props {
+  className?: string;
+  color?: string;
+  width?: number;
+  style?: React.CSSProperties;
+}
+export interface ITOCItem {
+  id: string;
+  text: string;
+  level: number;
+}
 
 export interface MediaDetailsSize {
   name: string;
@@ -26,16 +25,22 @@ export interface MediaDetails {
 }
 
 export interface MediaItemNode {
-  id: string;
+  id?: string;
   altText?: string;
   sourceUrl: string;
   mimeType?: string;
   mediaDetails?: MediaDetails;
 }
 
+export interface PostWithTOC extends Post {
+  updatedHtml: string;
+  toc: ITOCItem[];
+  featuredImage?: { node: MediaItemNode };
+}
+
 /** --- Author / User --- */
 export interface AuthorAvatar {
-  url: string;
+  url?: string;
   width?: number;
   height?: number;
 }
@@ -46,6 +51,13 @@ export interface AuthorNode {
   slug?: string;
   uri?: string;
   avatar?: AuthorAvatar;
+  description?: string;
+  featuredImage?: string;
+
+  // Optional, and correct plural "nodes"
+  posts?: {
+    nodes: Post[];
+  };
 }
 
 /** --- Terms (categories, tags) --- */
@@ -101,14 +113,13 @@ export interface Post {
   uri?: string;
   status?: string;
   isSticky?: boolean;
-
-  title: string;    // rendered title
-  excerpt: string;  // rendered excerpt
-  content: string;  // rendered content
-
-  date: string;     // published date
+  author_name?: string;
+  category?: string;
+  title: string; 
+  excerpt?: string;
+  content?: string;
+  date: string;
   modified?: string;
-
   commentCount?: number;
 
   featuredImage?: {
@@ -133,6 +144,8 @@ export interface Post {
 
   seo?: SEO;
 }
+
+
 export interface GraphQLError {
   message: string;
   locations?: { line: number; column: number }[];
@@ -140,8 +153,70 @@ export interface GraphQLError {
   extensions?: Record<string, unknown>;
 }
 
-
 export interface Logo {
   sourceUrl: string;
-  altText?: string | null; 
+  altText?: string | null;
 }
+
+export interface ICategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  count: number;
+  image?: {
+    sourceUrl: string;
+    altText?: string | null;
+  } | null;
+  parent?: {
+    node: {
+      id: string;
+      name: string;
+      slug: string;
+    }
+  } | null;
+  posts: {
+    nodes: Array<{
+      id: string;
+      title: string;
+      slug: string;
+      excerpt: string;
+      date: string;
+      featuredImage?: {
+        node: {
+          sourceUrl: string;
+          altText?: string | null;
+        } | null;
+      } | null;
+      author?: {
+        node?: {
+          id: string;
+          name: string;
+          slug: string;
+          avatar?: {
+            url?: string;
+          };
+        };
+      };
+    }>;
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string;
+    };
+  };
+}
+
+
+export type AdItem = {
+  type: 'ad';
+  adIndex: number; // Index in your ADS array
+  id: string | number;
+};
+
+// 2. Type for a single post item in the feed:
+export type PostItem = Post & {
+  type: 'post';
+};
+
+// 3. Union type for all possible items:
+export type FeedItem = AdItem | PostItem;

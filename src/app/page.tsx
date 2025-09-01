@@ -1,44 +1,59 @@
-// app/page.tsx  (or page.jsx/tsx)
-import { getAllPosts } from '@/lib/graph_queries/getFullposts';
-import PostsList from './components/PostsList';
-import React from 'react';
-import ViewsPosts from './components/ViewsPosts';
+// app/page.tsx
+import type { Metadata } from 'next';
+import { getSeo, buildMetadataFromSeo } from '@/lib/seo/seo';
 
+import PostsList from './components/Main-page/PostsList';
+import PopularPosts from './components/Popular/PopularPosts';
+// import AdPopup from './components/ads/adsPopup';
+import CatsPage from './[slug]/_components/categoryWrapper';
+import TradingViewScreener from './components/tickers/TradingViewScreener';
+import FinanstidningSeoText from './seoTextMainPage';
+// import { getLogo } from '@/lib/graph_queries/getLogo';
+import { getAllPosts } from '@/lib/graph_queries/getPost';
+// import AdsSection from './components/ads/AdsSection';
 
-export async function generateStaticParams() {
-  const res = await fetch(process.env.WP_GRAPHQL_URL!, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        query {
-          posts(first: 100) {
-            nodes { slug }
-          }
-        }
-      `,
-    }),
+export async function generateMetadata(): Promise<Metadata> {
+  const payload = await getSeo('/');
+
+  if (!payload?.nodeByUri) {
+    return {
+      title: process.env.NEXT_PUBLIC_HOSTNAME || 'Home',
+      description: process.env.NEXT_PUBLIC_HOSTNAME || 'Welcome to our site.',
+      robots: { index: true, follow: true },
+    };
+  }
+  
+  const meta = buildMetadataFromSeo(payload, {
+    metadataBase: process.env.NEXT_PUBLIC_HOST_URL,
+    siteName: process.env.NEXT_PUBLIC_HOSTNAME,
   });
-
-  const json = await res.json() as { data: { posts: { nodes: Array<{slug:string}> }}};
-  return json.data.posts.nodes.map((post) => ({ slug: post.slug }));
+  
+  if (!meta.description) {
+    meta.description = 'Latest news, insights and updates from our site.';
+  }
+  
+  return {
+    ...meta
+  };
 }
 
-
-const Page = async () => {
+export default async function Page() {
+  // const logo = await getLogo();
   const posts = await getAllPosts();
 
-return (
-  <div className="flex w-full flex-col gap-8 px-4 py-10 md:flex-row">           
-    <section className="w-full md:w-4/5 lg:w-3/1" >
-      <PostsList posts={posts} />
-    </section>
-    <aside className="w-full md:w-1/5 lg:w-1/2 shrink-0" >
-      <ViewsPosts />
-    </aside>
-  </div>
-);
-
-};
-
-export default Page;
+  return (
+    <div>
+      {/* <AdsSection /> */}
+      <PopularPosts />
+      {/* <AdsSection /> */}
+      <TradingViewScreener />
+      {/* <AdsSection /> */}
+      <CatsPage />
+      {/* <AdsSection /> */}
+      <PostsList posts={posts}/>
+      {/* <AdsSection /> */}
+      <FinanstidningSeoText />
+      {/* <AdPopup logo={logo}/> */}
+    </div>
+  );
+}
