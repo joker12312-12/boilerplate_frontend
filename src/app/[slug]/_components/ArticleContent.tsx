@@ -195,18 +195,27 @@ export function ArticleContent({
           </div>
 
           {/* Article body */}
-          <div
-            className="
-              prose prose-neutral dark:prose-invert
-              break-words
-              [&_pre]:break-all
-              [&_pre]:whitespace-pre-wrap
-              [&_pre]:overflow-x-auto
-              [&_code]:break-all
-              prose-sm
-            "
-            dangerouslySetInnerHTML={{ __html: post.updatedHtml }}
-          />
+         <div
+          className="
+            prose prose-neutral dark:prose-invert
+            break-words
+            [&_pre]:break-all
+            [&_pre]:whitespace-pre-wrap
+            [&_pre]:overflow-x-auto
+            [&_code]:break-all
+            prose-sm
+
+            /* Force link styles */
+            prose-a:text-blue-600
+            dark:prose-a:text-blue-400
+            prose-a:no-underline
+            hover:prose-a:underline
+            prose-a:visited:text-blue-700
+            dark:prose-a:visited:text-blue-500
+          "
+          dangerouslySetInnerHTML={{ __html: post.updatedHtml }}
+        />
+
 
           {/* Tags */}
           {tagNames?.length ? (
