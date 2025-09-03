@@ -70,8 +70,7 @@ function toSidebarPost(p: MinimalPost): SidebarPost {
   const primary = p.category ?? catArray[0]?.name;
 
   return {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    id: (p.id as any) ?? "",
+    id: (p.id as string | number) ?? "",
     title: p.title ?? "",
     date: p.date,
     excerpt: p.excerpt,
@@ -86,16 +85,24 @@ export default async function TodayPostsSidebar({ heading = "Dagens inlägg" }: 
   let usedFallback = false;
 
   try {
+    // Try fetching today's posts first
     const todays = await getTodaysPosts(12);
     posts = (todays as MinimalPost[]).map(toSidebarPost);
+  } catch (error) {
+    console.error("Error fetching today's posts:", error);
+    posts = [];
+  }
 
-    if (!posts.length) {
+  // If no today's posts, fetch fallback right before render
+  if (posts.length === 0) {
+    try {
       const latest = await getAllPosts({ first: 12 });
       posts = (latest as MinimalPost[]).map(toSidebarPost);
-      usedFallback = true;
+      usedFallback = posts.length > 0;
+    } catch (error) {
+      console.error("Error fetching fallback posts:", error);
+      posts = [];
     }
-  } catch {
-    posts = [];
   }
 
   const finalHeading = usedFallback ? "Populära inlägg" : heading;
@@ -122,9 +129,8 @@ export default async function TodayPostsSidebar({ heading = "Dagens inlägg" }: 
             {posts.length === 0 ? (
               <div className="text-sm text-zinc-600">Inget att visa just nu.</div>
             ) : (
-              /* Make the list scrollable on all sizes, with a height that grows by breakpoint */
-              <div className="w-full overflow-y-auto overscroll-contain
-                              max-h-[260px] sm:max-h-[420px] md:max-h-[544px]">
+              /* Scrollable list */
+              <div className="w-full overflow-y-auto overscroll-contain max-h-[260px] sm:max-h-[420px] md:max-h-[544px]">
                 <ul className="space-y-2.5 sm:space-y-3 w-full" style={{ contain: "content" }}>
                   {posts.slice(0, 12).map((p) => {
                     const date = formatDateStockholm(p.date);
@@ -158,7 +164,6 @@ export default async function TodayPostsSidebar({ heading = "Dagens inlägg" }: 
                             {p.title}
                           </div>
 
-                          {/* Excerpt hidden on small to save space */}
                           {excerpt && (
                             <p className="mt-1 hidden sm:block text-xs sm:text-sm text-black-600 dark:text-black-300 line-clamp-2 break-words">
                               {excerpt}
