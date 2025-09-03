@@ -74,7 +74,7 @@ export default function DesktopNav({ onNewsletterClick, categories }: DesktopNav
             pathname === '/advertisement' ? 'ring-2 ring-gray-300' : ''
           }`}
         >
-          <Link href="/advertisement" prefetch={false}>Annonsera</Link>
+          <Link href="/advertisement" prefetch={false}>ANNONSERA</Link>
         </Button>
 
         <Button
@@ -82,7 +82,7 @@ export default function DesktopNav({ onNewsletterClick, categories }: DesktopNav
           variant="ghost"
           className="text-base font-normal min-w-0 text-black"
         >
-          Nyhetsbrev
+          NYHETSBREV
         </Button>
       </div>
     </div>

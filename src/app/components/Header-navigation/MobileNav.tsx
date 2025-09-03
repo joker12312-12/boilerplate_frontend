@@ -129,7 +129,7 @@ export default function MobileNav({ links, onNewsletterClick, categories }: Mobi
                       onClick={() => setOpen(false)}
                     >
                       <Link href="/advertisement" prefetch={false}>
-                        Annonsering
+                        ANNONSERA
                       </Link>
                     </Button>
                   </li>
@@ -145,7 +145,7 @@ export default function MobileNav({ links, onNewsletterClick, categories }: Mobi
                       variant="ghost"
                       className="h-auto min-h-0 w-full text-left py-2 mt-1 text-black font-normal"
                     >
-                      Nyhetsbrev
+NYHETSBREV
                     </Button>
                   </li>
                 </>
