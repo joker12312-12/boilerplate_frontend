@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+
+.prose a { color: rgb(37 99 235) !important; }        /* blue-600 */
+.dark .prose a { color: rgb(96 165 250) !important; } /* blue-400 */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
