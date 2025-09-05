@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <Script
           id="adsense-script"
           async
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
           crossOrigin="anonymous"
         />
