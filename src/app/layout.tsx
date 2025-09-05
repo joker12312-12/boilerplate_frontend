@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
 import "@/styles/globals.css";
 import { AppProvider } from "@/store/AppContext";
 import { getLogo } from "@/lib/graph_queries/getLogo";
@@ -16,34 +15,26 @@ const Footer = dynamic(() => import("./components/Main-page/Footer"), {
 
 export async function generateMetadata(): Promise<Metadata> {
   const logo = await getLogo().catch(() => null);
-
   return {
     title: process.env.NEXT_PUBLIC_HOSTNAME ?? "Default Title",
     description: "Dina dagliga nyheter inom finans, aktier och börsen",
     keywords: ["ekonominyheter", "börsen", "aktier", "ekonomi", "finans"],
-    icons: {
-      icon: typeof logo === "string" ? logo : "/full_logo_with_slogan.png",
-    },
+    icons: { icon: typeof logo === "string" ? logo : "/full_logo_with_slogan.png" },
   };
 }
 
-interface RootLayoutProps {
-  children: ReactNode;
-}
-
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const logo = await getLogo().catch(() => null);
 
   return (
-    <html lang="en">
+    <html lang="sv">
       <head>
-        {/* Google AdSense loader */}
         <Script
-          id="adsense-loader"
-          async
+          id="adsense"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
+          async
           crossOrigin="anonymous"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"  
         />
       </head>
       <body className="flex min-h-screen flex-col">
