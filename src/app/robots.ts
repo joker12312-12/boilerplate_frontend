@@ -24,7 +24,6 @@ export default function robots(): MetadataRoute.Robots {
           '/author/',
           '/search/',
           '/*?q=',
-          'google.com, pub-4868110039996635, DIRECT, f08c47fec0942fa0'
         ],
       },
     ],
