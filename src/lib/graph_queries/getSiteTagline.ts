@@ -15,7 +15,7 @@ export async function getSiteTagline(): Promise<string> {
       json: {
         query: `query { generalSettings { description } }`,
       },
-      next: { revalidate: 300 }, 
+      next: { revalidate: 3000 }, 
     });
 
     if (!res.ok) return '';

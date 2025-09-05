@@ -38,11 +38,6 @@ export async function getTagLine(): Promise<string> {
   }
 }
 
-
-
-
-// lib/graph_queries/getSiteTagline.ts
-
 export async function getSiteTagline(): Promise<string> {
   const endpoint = process.env.WP_GRAPHQL_URL; 
   if (!endpoint) {
@@ -56,7 +51,7 @@ export async function getSiteTagline(): Promise<string> {
       json: {
         query: `query { generalSettings { description } }`,
       },
-      next: { revalidate: 300 }, 
+      next: { revalidate: 3000 }, 
     });
 
     if (!res.ok) return '';

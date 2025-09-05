@@ -85,7 +85,6 @@ export default function PostCard({ post, className = '', variant = 'default' }: 
             src={featuredImageUrl}
             alt={post.title || 'Post image'}
             fill
-            quality={100}
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1920px"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             priority
@@ -124,7 +123,6 @@ export default function PostCard({ post, className = '', variant = 'default' }: 
           src={featuredImageUrl}
           alt={post.title || 'Post image'}
           fill
-          quality={100}
           sizes="(max-width: 640px) 100vw,
                  (max-width: 1024px) 50vw,
                  33vw"
