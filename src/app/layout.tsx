@@ -32,9 +32,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <Script
           id="adsense"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
-          async
+          strategy="afterInteractive"
           crossOrigin="anonymous"
-          strategy="beforeInteractive"  
         />
       </head>
       <body className="flex min-h-screen flex-col">
