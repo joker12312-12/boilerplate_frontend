@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
-import Script from "next/script"; // ✅ Import Next.js Script component
-import { GoogleAnalytics } from "@next/third-parties/google";
+ import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "@/styles/globals.css";
 
