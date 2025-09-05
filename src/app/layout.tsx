@@ -37,13 +37,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense verification */}
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-4868110039996635"
-        />
-      </head>
-      <body className="flex min-h-screen flex-col">
         <Script
           id="adsense-script"
           async
@@ -51,6 +44,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
           crossOrigin="anonymous"
         />
+      </head>
+      <body className="flex min-h-screen flex-col">
 
         <AppProvider logo={logo}>
           <HeaderServer />
