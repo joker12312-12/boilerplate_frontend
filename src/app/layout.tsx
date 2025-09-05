@@ -36,8 +36,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
-             <meta name="google-adsense-account" content="ca-pub-4868110039996635"></meta>
-
+             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
+     crossorigin="anonymous"></script>
       </head>
       <body className="flex min-h-screen flex-col">
 
