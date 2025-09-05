@@ -43,6 +43,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           strategy="beforeInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
           crossOrigin="anonymous"
+          defer
         />
       </head>
       <body className="flex min-h-screen flex-col">
