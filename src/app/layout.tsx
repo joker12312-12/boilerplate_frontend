@@ -1,10 +1,11 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "@/styles/globals.css";
-
 import { AppProvider } from "@/store/AppContext";
 import { getLogo } from "@/lib/graph_queries/getLogo";
 import HeaderServer from "./components/Main-page/HeaderServer";
@@ -35,6 +36,16 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en">
+      <head>
+        {/* Google AdSense loader */}
+        <Script
+          id="adsense-loader"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4868110039996635"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="flex min-h-screen flex-col">
         <AppProvider logo={logo}>
           <HeaderServer />
