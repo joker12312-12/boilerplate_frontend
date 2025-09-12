@@ -171,7 +171,7 @@ export function ArticleContent({
               `}
             >
               <div className="text-sm">
-                By{" "}
+                Av{" "}
                 <Link
                 prefetch={false}
                   href={`/author/${post.author?.node.name || "admin"}`}
@@ -181,7 +181,7 @@ export function ArticleContent({
                 </Link>
               </div>
               <p className="prose prose-sm prose-neutral dark:prose-invert mt-1 max-w-full">
-              {snippetFromHtml(post.author?.node.description, 10)}
+              {snippetFromHtml(post.author?.node.description, 40)}
               </p>
               </div>
           </div>
